@@ -1,0 +1,29 @@
+- hosts: remotes
+  tasks:
+    - name: get nginx
+      ansible.builtin.apt:
+        name: nginx
+        state: present
+        update_cache: true
+      become: yes
+
+    - name: cp index page
+      ansible.builtin.copy:
+        src: /Users/alexandernepein/ansible-experiments/.tmp/index.html
+        dest: /usr/share/nginx/html/index.html
+      become: yes
+
+    - name: cp nginx cfg
+      ansible.builtin.copy:
+        src: /Users/alexandernepein/ansible-experiments/.tmp/nginx.conf
+        dest: /etc/nginx/nginx.conf
+      notify:
+        - restart nginx
+      become: yes
+
+  handlers:
+    - name: restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: reloaded
+      become: yes

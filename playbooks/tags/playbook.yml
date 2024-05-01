@@ -1,0 +1,53 @@
+- hosts: locals
+  tasks:
+    - name: Update indexes
+      ansible.builtin.apt:
+        update_cache: true
+        upgrade: true
+      become: yes
+      tags: [upd, inst]
+
+    - name: Install Git
+      ansible.builtin.apt:
+        name: git
+        state: present
+      become: yes
+      tags: inst
+
+    - name: Install make
+      ansible.builtin.apt:
+        name: make
+        state: present
+      become: yes
+      tags: inst
+
+    - name: Install NodeJs
+      ansible.builtin.apt:
+        name: nodejs
+        state: present
+      become: yes
+      tags: inst
+
+    - name: Create arya
+      ansible.builtin.user:
+        name: arya
+        shell: /bin/bash
+        groups: hexlet
+      become: yes
+      tags: usradd
+
+    - name: Create tirion
+      ansible.builtin.user:
+        name: tirion
+        shell: /bin/bash
+        groups: hexlet
+      become: yes
+      tags: usradd
+
+    - name: Create sansa
+      ansible.builtin.user:
+        name: sansa
+        shell: /bin/bash
+        groups: hexlet
+      become: yes
+      tags: usradd
